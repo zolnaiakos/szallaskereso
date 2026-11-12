@@ -6,6 +6,8 @@ const router = Router();
 
 router.get("/", async(req,res)=>{
 
+    //A ?minSzallas= a csoportosítás utáni feltétel → HAVING szallasDb >= ?, nem WHERE 
+
     let sql = 'SELECT * FROM szallasok sz LEFT JOIN varosok v ON v.id = sz.varos_id WHERE 1=1 '
 
     const {varos, minCsillag, maxAr, medence} = req.query
