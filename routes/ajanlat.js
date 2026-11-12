@@ -27,16 +27,18 @@ router.get('/', async(req,res)=>{
         hibak: hibak.join(', ')
     })
 }
-    
-    const [ellenorzes] = await pool.query('SELECT * FROM varosok WHERE nev = ?')
 
-    if (ellenorzes.length === 0) {
+    const [varosEllenorzes] = await pool.query(
+    'SELECT * FROM varosok WHERE nev = ?',
+    [varos]
+)
+
+    if (varosEllenorzes.length === 0) {
     return res.status(404).json({
         error: 'A város nem található!'
     })
 }
-
-
+    
     let sql = `
     SELECT sz.nev AS szallas, sz.csillag, sz.ar AS arFoEj, sz.ar * ? * ? AS osszesen
     FROM szallasok sz 

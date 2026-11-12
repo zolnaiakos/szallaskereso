@@ -38,7 +38,7 @@ router.get('/:id/szallasok', async(req,res)=>{
         })
     }
 
-    const [szallasok] = await pool.query('SELECT * FROM szallasok WHERE varos_id = ?',[id])
+    const [szallasok] = await pool.query('SELECT * FROM szallasok WHERE varos_id = ?',[id], res.status(200))
     
 
     res.json(szallasok)
