@@ -6,7 +6,6 @@ const router = Router();
 
 router.get("/", async(req,res)=>{
 
-    //A ?minSzallas= a csoportosítás utáni feltétel → HAVING szallasDb >= ?, nem WHERE 
 
     let sql = 'SELECT * FROM szallasok sz LEFT JOIN varosok v ON v.id = sz.varos_id WHERE 1=1 '
 
@@ -39,17 +38,17 @@ router.get("/", async(req,res)=>{
 
     const [eredmeny] = await pool.query(sql,szurok)
 
-      if(medence === 'igen' || medence === 'nem'){
-        return res.status(400).json({
-            error : "medence csak true vagy false lehet"
-        })
-    }
+    if (medence !== undefined && medence !== 'true' && medence !== 'false') {
+    return res.status(400).json({
+        error: "medence csak true vagy false lehet"
+    })
+}
 
-    if(6 < minCsillag ||minCsillag > 0){
-        return res.status(400).json({
-            error : "A minCsillag csak 1 és 5 között lehet"
-        })
-    }
+    if (Number(minCsillag) < 1 || Number(minCsillag) > 5) {
+    return res.status(400).json({
+        error: "A minCsillag csak 1 és 5 között lehet"
+    })
+}
 
     res.json(eredmeny)
 })

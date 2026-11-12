@@ -14,7 +14,7 @@ router.get('/', async(req,res)=>{
     const {minSzallas} = req.query
     const szallas = []
 
-    if(szallas){
+    if(minSzallas !== undefined ){
         sql += ' HAVING COUNT(sz.id) >= ?'
         szallas.push(Number(minSzallas))
     }
